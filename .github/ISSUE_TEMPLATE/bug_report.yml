@@ -1,0 +1,64 @@
+name: 🐛 Bug Report
+description: Create a report to help improve the dotfiles
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+        Before submitting, please check if a similar issue already exists.
+
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: "What is your shell and OS version?"
+      placeholder: "zsh 5.9, Ubuntu 22.04"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: component
+    attributes:
+      label: Affected Component
+      description: Which part of the dotfiles is affected?
+      options:
+        - Shell Configuration (zshrc)
+        - Aliases
+        - Functions
+        - Plugin Management
+        - Installation Scripts
+        - Keybindings
+        - Completion System
+        - Tool Integration (asdf, fzf, etc.)
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: A clear description of what the bug is
+      placeholder: "When I try to..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: How can we reproduce this issue?
+      placeholder: |
+        1. Install dotfiles using...
+        2. Run command...
+        3. See error
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs
+      description: Please copy and paste any relevant log output
+      render: shell

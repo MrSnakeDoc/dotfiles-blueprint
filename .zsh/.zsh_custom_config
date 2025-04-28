@@ -1,0 +1,50 @@
+if_has() { command -v "$1" &> /dev/null }
+
+# Conditionally load asdf golang environment
+if [ -f ~/.asdf/plugins/golang/set-env.zsh ]; then
+    . ~/.asdf/plugins/golang/set-env.zsh
+fi
+
+# Consolidated PATH management
+path_components=(
+    "$HOME/.local/bin"
+)
+
+# Clean and deduplicate PATH
+typeset -U PATH path
+for component in "${path_components[@]}"; do
+    if [ -d "$component" ]; then
+        path+=("$component")
+    fi
+done
+
+# enable syntax highlighting
+fpath=(~/.zsh/completion $fpath)
+if [[ -z "$_COMPINIT_DONE" ]]; then
+  _COMPINIT_DONE=1
+  autoload -Uz compinit
+  compinit -C -d ~/.cache/zcompdump
+  [[ ! -f ~/.cache/zcompdump.zwc || ~/.cache/zcompdump -nt ~/.cache/zcompdump.zwc ]] && zcompile ~/.cache/zcompdump
+fi
+
+# enable zoxide
+if command -v zoxide &> /dev/null; then
+    eval "$(zoxide init zsh)"
+fi
+
+# enable command-not-found if installed
+if [ -f /etc/zsh_command_not_found ]; then
+    . /etc/zsh_command_not_found
+fi
+
+if command -v starship &> /dev/null; then
+    eval "$(starship init zsh)"
+fi
+
+#fzf file
+ZSH_FZF=.zsh_fzf
+
+if [ -d "$ZSH_FZF" ]; then
+    # FZF configuration
+    [ -f "$ZSH_FZF" ] && source "$ZSH_FZF"
+fi

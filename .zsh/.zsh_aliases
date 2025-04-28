@@ -1,0 +1,139 @@
+#!/bin/zsh
+# 📂 Navigation
+if_has eza && alias ls='eza -a --color=always --long --git --no-filesize --icons=always --no-time' || alias ls='ls --color=auto'
+if_has z && alias cd='z'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+if_has eza && alias tree='eza --tree'
+
+# 📄 Clipboard
+if_has xclip && {
+  alias pbcopy="xsel --clipboard --input"
+  alias pbpaste="xsel --clipboard --output"
+}
+
+# 🔍 Recherche & Preview
+if_has fzf && if_has bat && alias fzf='fzf --preview "bat --color=always --style=header,grid --line-range :500 {}"'
+
+# 📦 Grep + Cat
+if_has rg && alias grep='rg'
+if_has bat && {
+  alias cat='bat'
+  alias catp='bat -p'
+}
+
+# 📑 Shell utils
+alias diff='diff --color=auto'
+alias ip='ip --color=auto'
+alias cls='clear'
+alias nzsh='nano ~/.zshrc'
+alias czsh="code ~/.zshrc"
+alias src='source ~/.zshrc'
+
+# 🐹 Go
+if_has go && {
+  alias g='go'
+  alias gmod='go mod'
+  alias gmodi='go mod init'
+  alias gget='go get'
+  alias gmt='go mod tidy'
+  alias goev='go mod edit -go $(go version | awk "{print \$3}" | sed "s/^go//")'
+  alias goc='go clean'
+  alias gr='go run'
+  alias gbu='go build'
+  alias glist='go list -m all'
+}
+
+# 🧬 asdf
+if_has asdf && {
+  alias asd='asdf'
+  alias asdv='asdf version'
+  alias asdgi='asdf plugin add golang https://github.com/asdf-community/asdf-golang.git'
+  alias asdl='asdf list'
+  alias asdi='asdf install'
+  alias asdg='asdf global'
+  alias asdc='asdf current'
+  alias asdlo='asdf local'
+  alias asdu='asdf uninstall'
+  alias asdlg='asdf list golang'
+  alias asdls='asdf local golang system'
+}
+
+# 🧪 Git
+alias gb='git branch'
+alias gbd='git branch -D'
+alias gac='git add . && git commit -m'
+alias clone='git clone'
+alias gs='git status'
+alias gd='git diff'
+alias gdc='git diff --cached'
+alias gcb='git checkout -b'
+alias gco='git checkout'
+alias gbm='git branch -M main'
+alias gr='git rebase'
+alias gri='git rebase -i'
+alias gp='git push'
+alias gpf='git push --force'
+alias gpgt='git push gitea'
+alias poule='git pull'
+alias poulet='git pull --rebase'
+alias ghook="git config core.hooksPath .hooks"
+alias gl='git log --oneline --graph --decorate'
+
+# 🐳 Docker
+if_has docker && {
+  alias d='docker'
+  alias dc='docker compose'
+  alias drm='docker images --filter "dangling=true" -q --no-trunc | xargs -r docker rmi'
+  alias drv='docker volume ls -qf dangling=true | xargs -r docker volume rm'
+  alias lzd="docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock -v ~/docker_volumes/lazydocker:/.config/jesseduffield/lazydocker lazyteam/lazydocker"
+  alias rustscan='docker run -it --rm --name rustscan rustscan/rustscan:1.10.0'
+  alias scont="docker kill $(docker ps -q)"
+
+  if_has fzf && {
+    dps() {
+      local cmd="docker ps"
+      [[ "$1" == "-a" ]] && cmd="docker ps -a"
+      local selection=$(eval "$cmd --format '{{.ID}}\t{{.Names}}\t{{.Status}}'" | fzf --no-preview)
+      local container_name=$(echo "$selection" | awk '{print $2}')
+      [[ -n "$container_name" ]] && echo "$container_name"
+    }
+
+    dip() {
+      local container="$1"
+      [[ -z "$container" ]] && container=$(docker ps --format '{{.Names}}' | fzf --no-preview)
+      [[ -n "$container" ]] && docker inspect "$container" | bat --style=grid | fzf --no-preview || echo "😤 Aucun conteneur sélectionné ou trouvé."
+    }
+  }
+}
+
+# 🐍 Python
+alias py='python3'
+alias pyb='python3 -B'
+
+# ⚙️ Ansible
+if_has ansible && {
+  alias a="ansible"
+  alias apb="ansible-playbook"
+}
+
+# 🌱 Terraform
+if_has terraform && {
+  alias tf="terraform"
+  alias tfi="terraform init"
+  alias tfa="terraform apply"
+  alias tfp="terraform plan -out=./tfplan"
+}
+
+# 🔑 SSH
+alias conf="code ~/.ssh/config"
+alias nconf="nano ~/.ssh/config"
+alias keygen="ssh-keygen -t ed25519 -C"
+
+# 🧷 Divers
+if_has pnpm && alias pn='pnpm'
+alias sys='tail -f /var/log/syslog'
+alias seckey="openssl rand -hex 64"
+alias df='df -h'
+alias duf='du -sh *'

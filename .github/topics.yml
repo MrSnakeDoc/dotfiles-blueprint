@@ -1,0 +1,21 @@
+# Topics for repository categorization
+topics:
+  - dotfiles
+  - zsh
+  - shell
+  - terminal
+  - linux
+  - configuration
+  - shell-scripts
+  - productivity
+  - development-environment
+  - starship
+  - homebrew
+  - asdf
+  - fzf
+  - atuin
+  - kitty
+  - developer-tools
+  - automation
+  - installation-scripts
+  - devops-tools

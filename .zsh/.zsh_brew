@@ -1,0 +1,12 @@
+#!/bin/zsh
+# Load linuxbrew
+if [ -f "/home/linuxbrew/.linuxbrew/bin/brew" ]; then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
+
+if command -v brew &> /dev/null; then
+  export BREW_PREFIX="${BREW_PREFIX:-$(brew --prefix)}"
+  export ASDF_PATH="${ASDF_PATH:-$BREW_PREFIX/opt/asdf/libexec/asdf.sh}"
+  export ZA_PATH=${ZA_PATH:-$BREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh}
+  export ZSHI_PATH=${ZSHI_PATH:-$BREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh}
+fi

@@ -1,0 +1,16 @@
+allow_remote_control
+# Split screen horizontally (Ctrl+Shift+))
+map f6 launch --location=hsplit
+
+# Split screen vertically (Ctrl+Shift+()
+map f5 launch --location=vsplit
+
+# Fonts
+font_family family="CaskaydiaCove Nerd Font Mono"
+font_size    14.0
+
+
+# BEGIN_KITTY_THEME
+# Paul Millr
+include current-theme.conf
+# END_KITTY_THEME

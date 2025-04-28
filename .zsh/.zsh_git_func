@@ -1,0 +1,11 @@
+gps() {
+  local branch
+  branch=$(git symbolic-ref --short HEAD)
+  git push -u origin "$branch"
+}
+
+gfo() {
+  local branch
+  branch=$(git symbolic-ref --short HEAD)
+  git fetch origin "$branch:$branch"
+}
