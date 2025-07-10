@@ -9,7 +9,7 @@ This repository provides a modular and maintainable way to manage terminal confi
 ## Structure
 
 ```
-dotfiles/
+dotfiles-blueprint/
 ├── .zsh/                   # ZSH configurations and modules
 │   ├── .zsh_aliases        # All shell aliases
 │   ├── .zsh_custom_config  # Custom ZSH settings
@@ -41,7 +41,7 @@ dotfiles/
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/MrSnakeDoc/dotfiles.git ~/dotfiles
+git clone https://github.com/MrSnakeDoc/dotfiles-blueprint.git ~/dotfiles
 ```
 
 2. Run the installation scripts:
